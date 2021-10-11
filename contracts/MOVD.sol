@@ -23,27 +23,27 @@ contract ERC20 is Context, IERC20 {
         _decimals = 18;
         _symbol = symbol_;
         _name = name_;
-        _totalSupply = uint256(1000000000).mul(uint256(10)**18);
+        _totalSupply = 10 ** 9 * 1e18;
 
         // MOVE-TEAM
-        _balances[address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D)] = uint256(150000000).mul(uint256(10)**18);
-        emit Transfer(address(0), address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D), uint256(150000000).mul(uint256(10)**18) );
+        _balances[address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D)] = 15 * 10 ** 7 * 1e18;
+        emit Transfer(address(0), address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D), 15 * 10 ** 7 * 1e18 );
 
         // MOVE-TOKENSALES
-        _balances[address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8)] = uint256(130000000).mul(uint256(10)**18);
-        emit Transfer(address(0), address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8), uint256(130000000).mul(uint256(10)**18));
+        _balances[address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8)] = 13 * 10 ** 7 * 1e18;
+        emit Transfer(address(0), address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8), 13 * 10 ** 7 * 1e18);
 
         // MOVE-PARTNERSHIPS
-        _balances[address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58)] = uint256(100000000).mul(uint256(10)**18);
-        emit Transfer(address(0), address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58), uint256(100000000).mul(uint256(10)**18));
+        _balances[address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58)] = 10 ** 8 * 1e18;
+        emit Transfer(address(0), address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58), 10 ** 8 * 1e18);
 
         // MOVE-ECOSYSTEM
-        _balances[address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3)] = uint256(120000000).mul(uint256(10)**18);
-        emit Transfer(address(0), address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3), uint256(120000000).mul(uint256(10)**18));
+        _balances[address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3)] = 12 * 10 ** 7 * 1e18;
+        emit Transfer(address(0), address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3), 12 * 10 ** 7 * 1e18);
 
         // MOVE-MINING
-        _balances[address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc)] = uint256(500000000).mul(uint256(10)**18);
-        emit Transfer(address(0), address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc), uint256(500000000).mul(uint256(10)**18));
+        _balances[address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc)] = 5 * 10 ** 8 * 1e18;
+        emit Transfer(address(0), address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc), 5 * 10 ** 8 * 1e18);
     }
 
     function name() public view virtual returns (string memory) {
