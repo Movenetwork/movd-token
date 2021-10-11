@@ -26,24 +26,24 @@ contract ERC20 is Context, IERC20 {
         _totalSupply = uint256(1000000000).mul(uint256(10)**18);
 
         // MOVE-TEAM
-        _balances[address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D)] = uint256(150000000);
-        emit Transfer(address(0), address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D), uint256(150000000));
+        _balances[address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D)] = uint256(150000000).mul(uint256(10)**18);
+        emit Transfer(address(0), address(0xdd20a5D3c5EE23F94Fd573ca5837B562a2D3C32D), uint256(150000000).mul(uint256(10)**18) );
 
         // MOVE-TOKENSALES
-        _balances[address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8)] = uint256(130000000);
-        emit Transfer(address(0), address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8), uint256(130000000));
+        _balances[address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8)] = uint256(130000000).mul(uint256(10)**18);
+        emit Transfer(address(0), address(0x4aBB983dddFA282F97bF8289a978B3d658E5D5F8), uint256(130000000).mul(uint256(10)**18));
 
         // MOVE-PARTNERSHIPS
-        _balances[address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58)] = uint256(100000000);
-        emit Transfer(address(0), address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58), uint256(100000000));
+        _balances[address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58)] = uint256(100000000).mul(uint256(10)**18);
+        emit Transfer(address(0), address(0x9e70eD075A46e418E7963335Cf9Fde5Fc5C8eA58), uint256(100000000).mul(uint256(10)**18));
 
         // MOVE-ECOSYSTEM
-        _balances[address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3)] = uint256(120000000);
-        emit Transfer(address(0), address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3), uint256(120000000));
+        _balances[address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3)] = uint256(120000000).mul(uint256(10)**18);
+        emit Transfer(address(0), address(0xF6C423BB72632f82027DB34615eC9c21de21b1C3), uint256(120000000).mul(uint256(10)**18));
 
         // MOVE-MINING
-        _balances[address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc)] = uint256(500000000);
-        emit Transfer(address(0), address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc), uint256(500000000));
+        _balances[address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc)] = uint256(500000000).mul(uint256(10)**18);
+        emit Transfer(address(0), address(0xa3F060Bc75881324F7f2919558797F61ea94AEDc), uint256(500000000).mul(uint256(10)**18));
     }
 
     function name() public view virtual returns (string memory) {
@@ -71,7 +71,7 @@ contract ERC20 is Context, IERC20 {
       _;
     }
 
-    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
+    function transfer(address recipient, uint256 amount) public virtual override onlyPayloadSize(2 * 32) returns (bool) {
         _transfer(_msgSender(), recipient, amount);
         return true;
     }
@@ -80,28 +80,28 @@ contract ERC20 is Context, IERC20 {
         return _allowances[owner][spender];
     }
 
-    function approve(address spender, uint256 amount) public virtual override returns (bool) {
+    function approve(address spender, uint256 amount) public virtual override onlyPayloadSize(2 * 32) returns (bool) {
         _approve(_msgSender(), spender, amount);
         return true;
     }
 
-    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount) public virtual override onlyPayloadSize(3 * 32) returns (bool) {
         _transfer(sender, recipient, amount);
         _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
         return true;
     }
 
-    function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {
+    function increaseAllowance(address spender, uint256 addedValue) public virtual onlyPayloadSize(2 * 32) returns (bool) {
         _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));
         return true;
     }
 
-    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
+    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual onlyPayloadSize(2 * 32) returns (bool) {
         _approve(_msgSender(), spender, _allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero"));
         return true;
     }
 
-    function _transfer(address sender, address recipient, uint256 amount) internal virtual onlyPayloadSize(2 * 32) {
+    function _transfer(address sender, address recipient, uint256 amount) internal virtual {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
 
@@ -110,7 +110,7 @@ contract ERC20 is Context, IERC20 {
         emit Transfer(sender, recipient, amount);
     }
 
-    function _approve(address owner, address spender, uint256 amount) internal virtual onlyPayloadSize(2 * 32) {
+    function _approve(address owner, address spender, uint256 amount) internal virtual {
         require(owner != address(0), "ERC20: approve from the zero address");
         require(spender != address(0), "ERC20: approve to the zero address");
 
@@ -187,7 +187,7 @@ contract MOVD is Pausable, ERC20 {
   constructor() 
   ERC20("MOVD Token", "MOVD"){}
 
-  function transfer(address recipient, uint256 amount) public virtual override whenNotPaused returns (bool) {
+  function transfer(address recipient, uint256 amount) public virtual override whenNotPaused onlyPayloadSize(2 * 32) returns (bool) {
     _transfer(_msgSender(), recipient, amount);
     return true;
   }
