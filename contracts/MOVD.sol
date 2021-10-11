@@ -192,7 +192,7 @@ contract MOVD is Pausable, ERC20 {
     return true;
   }
 
-  function transferFrom(address sender, address recipient, uint256 amount) public virtual override whenNotPaused returns (bool) {
+  function transferFrom(address sender, address recipient, uint256 amount) public virtual override whenNotPaused onlyPayloadSize(3 * 32) returns (bool) {
     super.transferFrom(sender, recipient, amount);
     return true;
   }
